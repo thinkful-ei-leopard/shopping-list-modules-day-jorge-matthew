@@ -1,18 +1,10 @@
 const store = {
-  items: [
-    { id: cuid(), name: 'apples', checked: false },
-    { id: cuid(), name: 'oranges', checked: false },
-    { id: cuid(), name: 'milk', checked: true },
-    { id: cuid(), name: 'bread', checked: false }
-  ],
+  items: [],
   hideCheckedItems: false
 };
   
 const generateItemElement = function (item) {
   let itemTitle = `<span class="shopping-item shopping-item__checked">${item.name}</span>`;
-  // Added a form here to allow the user to edit 
-  // the shopping item if the checked property
-  // on our item is set to false
   if (!item.checked) {
     itemTitle = `
         <form class="js-edit-item">
@@ -129,11 +121,6 @@ const handleToggleFilterClick = function () {
   });
 };
   
-/**
-   * This function handles the submission of 
-   * the new '.js-edit-item' form added within 
-   * our 'generateItemElement' function.
-   */
 const handleEditShoppingItemSubmit = function () {
   $('.js-shopping-list').on('submit', '.js-edit-item', event => {
     event.preventDefault();
@@ -143,12 +130,17 @@ const handleEditShoppingItemSubmit = function () {
     render();
   });
 };
-
+  
+const bindEventListeners = function () {
+  handleNewItemSubmit();
+  handleItemCheckClicked();
+  handleDeleteItemClicked();
+  handleEditShoppingItemSubmit();
+  handleToggleFilterClick();
+};
+  
+// This object contains the only exposed methods from this module:
 export default {
-  handleNewItemSubmit,
-  handleItemCheckClicked,
-  handleDeleteItemClicked,
-  handleToggleFilterClick,
-  handleEditShoppingItemSubmit,
-  render
+  render,
+  bindEventListeners
 };
